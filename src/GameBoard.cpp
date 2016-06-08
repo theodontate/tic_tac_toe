@@ -36,13 +36,26 @@ void GameBoard::DisplayGameBoard () {
 
 void printRow (BoardField* p) {
 	static BoardField* tmp = p;
+	static int tmp_iteration = 0;
 	int fieldwidth = 3;
 	int numberofcolumns = 3;
 	while (numberofcolumns > 0) {
 		while (fieldwidth > 0) {
 			if (fieldwidth % 2 == 0) {
-				std::cout << tmp->GetPosition();
+				//std::cout << tmp->GetPosition();
+				switch (tmp->GetMarkedBy()) {
+				case None:
+					std::cout << tmp->GetPosition();
+					break;
+				case Player1:
+					std::cout << 'x';
+					break;
+				case Player2:
+					std::cout << 'o';
+					break;
+				}
 				tmp++;
+				tmp_iteration++;
 			}
 			else
 				std::cout << " ";
@@ -54,14 +67,22 @@ void printRow (BoardField* p) {
 		--numberofcolumns;
 	}
 	std::cout << std::endl;
+	if (tmp_iteration >= 9) {
+		tmp = p;
+		tmp_iteration = 0;
+	}
 	return;
 }
 
 void GameBoard::update (int position, const std::string& playerName) {
 	if (playerName == "player1") {
-		m_boardFields[position].SetMarkedBy(mark::Player1);
+		m_boardFields[position - 1].SetMarkedBy(::Player1);
+		for (int i = 0; i < 9; i++)
+			std::cout << m_boardFields[i];
 	} else {
-		m_boardFields[position].SetMarkedBy(mark::Player2);
+		m_boardFields[position - 1].SetMarkedBy(::Player2);
+		for (int i = 0; i < 9; i++)
+			std::cout << m_boardFields[i];
 	}
 
 }

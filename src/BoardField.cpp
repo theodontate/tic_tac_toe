@@ -41,3 +41,11 @@ void BoardField::SetMarkedBy(mark m) {
 	m_markedBy = m;
 }
 
+mark BoardField::GetMarkedBy () {
+	return m_markedBy;
+}
+
+std::ostream& operator<< (std::ostream& os, const BoardField& a) {
+	return os << "Position : " << a.m_position
+		<< "\nMarked By : " << a.m_markedBy << std::endl;
+}

@@ -31,16 +31,20 @@ int main (int argc, char** argv) {
 	int position = 0;
 	while (gameplay) {
 		if (tmp % 2 == 0) {
-			std::cout << "Player1 please enter your move : ";
+			std::cout << "\nPlayer1 please enter your move : ";
 			std::cin >> position;
 			board.update(position, player1.GetName());
+			//std::cout << "\033[2J\033[1;1H";
 			board.DisplayGameBoard();
+			tmp++;
 		}
 		else {
-			std::cout << "Player2 please enter your move : ";
+			std::cout << "\nPlayer2 please enter your move : ";
 			std::cin >> position;
 			board.update(position, player2.GetName());
+			//std::cout << "\033[2J\033[1;1H";
 			board.DisplayGameBoard();
+			tmp++;
 		}
 
 	}
