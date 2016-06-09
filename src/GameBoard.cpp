@@ -36,13 +36,26 @@ void GameBoard::DisplayGameBoard () {
 
 void printRow (BoardField* p) {
 	static BoardField* tmp = p;
+	static int tmp_iteration = 0;
 	int fieldwidth = 3;
 	int numberofcolumns = 3;
 	while (numberofcolumns > 0) {
 		while (fieldwidth > 0) {
 			if (fieldwidth % 2 == 0) {
-				std::cout << tmp->GetPosition();
+				//std::cout << tmp->GetPosition();
+				switch (tmp->GetMarkedBy()) {
+				case None:
+					std::cout << tmp->GetPosition();
+					break;
+				case Player1:
+					std::cout << 'x';
+					break;
+				case Player2:
+					std::cout << 'o';
+					break;
+				}
 				tmp++;
+				tmp_iteration++;
 			}
 			else
 				std::cout << " ";
@@ -54,106 +67,349 @@ void printRow (BoardField* p) {
 		--numberofcolumns;
 	}
 	std::cout << std::endl;
+	if (tmp_iteration >= 9) {
+		tmp = p;
+		tmp_iteration = 0;
+	}
 	return;
 }
 
-void GameBoard::Update (int position, const std::string& playerName) {
-	if (playerName == "player1") {
-		m_boardFields[position].SetMarkedBy(::Player1);
-	} else {
-		m_boardFields[position].SetMarkedBy(::Player2);
+bool GameBoard::Update (int position, const std::string& playerName) {
+	if (playerName == "player1"
+	    && m_boardFields[position - 1].GetMarkedBy() == ::None) {
+		m_boardFields[position - 1].SetMarkedBy(::Player1);
+		for (int i = 0; i < 9; i++)
+			std::cout << m_boardFields[i];
+		return true;
+	} else if (playerName == "player2"
+		   && m_boardFields[position - 1].GetMarkedBy() == ::None) {
+		m_boardFields[position - 1].SetMarkedBy(::Player2);
+		for (int i = 0; i < 9; i++)
+			std::cout << m_boardFields[i];
+		return true;
 	}
-
+	return false;
 }
 
-bool GameBoard::GameOver () {
-	if (m_boardFields[0].GetMarkedBy() == m_boardFields[1].GetMarkedBy()
-		== m_boardFields[2].GetMarkedBy() != None) {
+bool GameBoard::GameOver (const std::string& name1, const std::string& name2) {
+	if ((m_boardFields[0].GetMarkedBy() == m_boardFields[1].GetMarkedBy())
+		&&
+		(m_boardFields[1].GetMarkedBy() == m_boardFields[2].GetMarkedBy())
+		&& (m_boardFields[0].GetMarkedBy() != None)) {
 		if (m_boardFields[1].GetMarkedBy() == Player1) {
-			std::cout << "Player1 won !!!";
+			std::cout << "0==1==2\n";
+			std::cout << m_boardFields[0].GetPosition()
+				<< "=="
+				<< m_boardFields[1].GetPosition()
+				<< "=="
+				<< m_boardFields[2].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[0].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[1].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[2].GetMarkedBy()
+				<< "\n";
+			std::cout << name1 << " won !!!";
 			return true;
 		} else if (m_boardFields[1].GetMarkedBy() == Player2){
-			std::cout << "Player2 won !!!";
+			std::cout << "0==1==2\n";
+			std::cout << m_boardFields[0].GetPosition()
+				<< "=="
+				<< m_boardFields[1].GetPosition()
+				<< "=="
+				<< m_boardFields[2].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[0].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[1].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[2].GetMarkedBy()
+				<< "\n";
+			std::cout << name2 << " won !!!";
 			return true;
 		}
 	}
 
-	else if (m_boardFields[0].GetMarkedBy() == m_boardFields[3].GetMarkedBy()
-		== m_boardFields[6].GetMarkedBy() != None) {
+	else if ((m_boardFields[0].GetMarkedBy() == m_boardFields[3].GetMarkedBy())
+		&&
+		(m_boardFields[3].GetMarkedBy() == m_boardFields[6].GetMarkedBy())
+		 && (m_boardFields[0].GetMarkedBy()!= None)) {
 		if (m_boardFields[0].GetMarkedBy() == Player1) {
-			std::cout << "Player1 won !!!";
+			std::cout << "0==3==6\n";
+			std::cout << m_boardFields[0].GetPosition()
+				<< "=="
+				<< m_boardFields[3].GetPosition()
+				<< "=="
+				<< m_boardFields[6].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[0].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[3].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[6].GetMarkedBy()
+				<< "\n";
+			std::cout << name1 << " won !!!";
 			return true;
 		} else if (m_boardFields[0].GetMarkedBy() == Player2){
-			std::cout << "Player2 won !!!";
+			std::cout << "0==3==6\n";
+			std::cout << m_boardFields[0].GetPosition()
+				<< "=="
+				<< m_boardFields[3].GetPosition()
+				<< "=="
+				<< m_boardFields[6].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[0].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[3].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[6].GetMarkedBy()
+				<< "\n";
+			std::cout << name2 << " won !!!";
 			return true;
 		}
 	}
 
-	else if (m_boardFields[0].GetMarkedBy() == m_boardFields[4].GetMarkedBy()
-		== m_boardFields[8].GetMarkedBy() != None) {
+	else if ((m_boardFields[0].GetMarkedBy() == m_boardFields[4].GetMarkedBy())
+		&&
+		(m_boardFields[4].GetMarkedBy() == m_boardFields[8].GetMarkedBy())
+		&& (m_boardFields[0].GetMarkedBy() != None)) {
 		if (m_boardFields[0].GetMarkedBy() == Player1) {
-			std::cout << "Player1 won !!!";
+			std::cout << "0==4==8\n";
+			std::cout << m_boardFields[0].GetPosition()
+				<< "=="
+				<< m_boardFields[4].GetPosition()
+				<< "=="
+				<< m_boardFields[8].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[0].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[4].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[8].GetMarkedBy()
+				<< "\n";
+			std::cout << name1 << " won !!!";
 			return true;
 		} else if (m_boardFields[0].GetMarkedBy() == Player2){
-			std::cout << "Player2 won !!!";
+			std::cout << "0==4==8\n";
+			std::cout << m_boardFields[0].GetPosition()
+				<< "=="
+				<< m_boardFields[4].GetPosition()
+				<< "=="
+				<< m_boardFields[8].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[0].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[4].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[8].GetMarkedBy()
+				<< "\n";
+			std::cout << name2 << " won !!!";
 			return true;
 		}
 	}
 
-	else if (m_boardFields[6].GetMarkedBy() == m_boardFields[7].GetMarkedBy()
-		== m_boardFields[8].GetMarkedBy() != None) {
+	else if ((m_boardFields[6].GetMarkedBy() == m_boardFields[7].GetMarkedBy())
+		&&
+		(m_boardFields[7].GetMarkedBy() == m_boardFields[8].GetMarkedBy())
+		&& (m_boardFields[6].GetMarkedBy() != None)) {
 		if (m_boardFields[7].GetMarkedBy() == Player1) {
-			std::cout << "Player1 won !!!";
+			std::cout << "6==7==8\n";
+			std::cout << m_boardFields[6].GetPosition()
+				<< "=="
+				<< m_boardFields[7].GetPosition()
+				<< "=="
+				<< m_boardFields[8].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[6].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[7].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[8].GetMarkedBy()
+				<< "\n";
+			std::cout << name1 << " won !!!";
 			return true;
 		} else if (m_boardFields[7].GetMarkedBy() == Player2){
-			std::cout << "Player2 won !!!";
+			std::cout << "6==7==8\n";
+			std::cout << m_boardFields[6].GetPosition()
+				<< "=="
+				<< m_boardFields[7].GetPosition()
+				<< "=="
+				<< m_boardFields[8].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[6].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[7].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[8].GetMarkedBy()
+				<< "\n";
+			std::cout << name2 << " won !!!";
 			return true;
 		}
 	}
 
-	else if (m_boardFields[3].GetMarkedBy() == m_boardFields[4].GetMarkedBy()
-		== m_boardFields[5].GetMarkedBy() != None) {
+	else if ((m_boardFields[3].GetMarkedBy() == m_boardFields[4].GetMarkedBy())
+		&&
+		(m_boardFields[4].GetMarkedBy() == m_boardFields[5].GetMarkedBy())
+		&& (m_boardFields[3].GetMarkedBy() != None)) {
 		if (m_boardFields[4].GetMarkedBy() == Player1) {
-			std::cout << "Player1 won !!!";
+			std::cout << "3==4==5\n";
+			std::cout << m_boardFields[3].GetPosition()
+				<< "=="
+				<< m_boardFields[4].GetPosition()
+				<< "=="
+				<< m_boardFields[5].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[3].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[4].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[5].GetMarkedBy()
+				<< "\n";
+			std::cout << name1 << " won !!!";
 			return true;
 		} else if (m_boardFields[4].GetMarkedBy() == Player2){
-			std::cout << "Player2 won !!!";
+			std::cout << "3==4==5\n";
+			std::cout << m_boardFields[3].GetPosition()
+				<< "=="
+				<< m_boardFields[4].GetPosition()
+				<< "=="
+				<< m_boardFields[5].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[3].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[4].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[5].GetMarkedBy()
+				<< "\n";
+			std::cout << name2 << " won !!!";
 			return true;
 		}
 	}
 
-	else if (m_boardFields[1].GetMarkedBy() == m_boardFields[4].GetMarkedBy()
-		== m_boardFields[7].GetMarkedBy() != None) {
+	else if ((m_boardFields[1].GetMarkedBy() == m_boardFields[4].GetMarkedBy())
+		&&
+		(m_boardFields[4].GetMarkedBy() == m_boardFields[7].GetMarkedBy())
+		       && (m_boardFields[1].GetMarkedBy() != None)) {
 		if (m_boardFields[4].GetMarkedBy() == Player1) {
-			std::cout << "Player1 won !!!";
+			std::cout << "1==7==4\n";
+			std::cout << m_boardFields[1].GetPosition()
+				<< "=="
+				<< m_boardFields[4].GetPosition()
+				<< "=="
+				<< m_boardFields[7].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[1].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[4].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[7].GetMarkedBy()
+				<< "\n";
+			std::cout << name1 << " won !!!";
 			return true;
 		} else if (m_boardFields[4].GetMarkedBy() == Player2){
-			std::cout << "Player2 won !!!";
+			std::cout << "1==7==4\n";
+			std::cout << m_boardFields[1].GetPosition()
+				<< "=="
+				<< m_boardFields[4].GetPosition()
+				<< "=="
+				<< m_boardFields[7].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[1].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[4].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[7].GetMarkedBy()
+				<< "\n";
+			std::cout << name2 << " won !!!";
 			return true;
 		}
 	}
 
-	else if (m_boardFields[2].GetMarkedBy() == m_boardFields[5].GetMarkedBy()
-		== m_boardFields[8].GetMarkedBy() != None) {
+	else if ((m_boardFields[2].GetMarkedBy() == m_boardFields[5].GetMarkedBy())
+		&&
+		(m_boardFields[5].GetMarkedBy() == m_boardFields[8].GetMarkedBy())
+		&& (m_boardFields[2].GetMarkedBy() != None)) {
 		if (m_boardFields[5].GetMarkedBy() == Player1) {
-			std::cout << "Player1 won !!!";
+			std::cout << "2==5==8\n";
+			std::cout << m_boardFields[2].GetPosition()
+				<< "=="
+				<< m_boardFields[5].GetPosition()
+				<< "=="
+				<< m_boardFields[8].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[2].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[5].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[8].GetMarkedBy()
+				<< "\n";
+			std::cout << name1 << " won !!!";
 			return true;
 		} else if (m_boardFields[5].GetMarkedBy() == Player2){
-			std::cout << "Player2 won !!!";
+			std::cout << "2==5==8\n";
+			std::cout << m_boardFields[2].GetPosition()
+				<< "=="
+				<< m_boardFields[5].GetPosition()
+				<< "=="
+				<< m_boardFields[8].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[2].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[5].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[8].GetMarkedBy()
+				<< "\n";
+			std::cout << name1 <<  " won !!!";
 			return true;
 		}
 	}
 
-	else if (m_boardFields[2].GetMarkedBy() == m_boardFields[4].GetMarkedBy()
-		== m_boardFields[6].GetMarkedBy() != None) {
+	else if ((m_boardFields[2].GetMarkedBy() == m_boardFields[4].GetMarkedBy())
+		&&
+		(m_boardFields[4].GetMarkedBy() == m_boardFields[6].GetMarkedBy())
+		       && (m_boardFields[2].GetMarkedBy() != None)) {
 		if (m_boardFields[4].GetMarkedBy() == Player1) {
-			std::cout << "Player1 won !!!";
+			std::cout << "2=4=6\n";
+			std::cout << m_boardFields[2].GetPosition()
+				<< "=="
+				<< m_boardFields[4].GetPosition()
+				<< "=="
+				<< m_boardFields[6].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[2].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[4].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[6].GetMarkedBy()
+				<< "\n";
+			std::cout << name1 << " won !!!";
 			return true;
-		} else if (m_boardFields[5].GetMarkedBy() == Player2){
-			std::cout << "Player2 won !!!";
+		} else if (m_boardFields[4].GetMarkedBy() == Player2){
+			std::cout << "2=4=6\n";
+			std::cout << m_boardFields[2].GetPosition()
+				<< "=="
+				<< m_boardFields[4].GetPosition()
+				<< "=="
+				<< m_boardFields[6].GetPosition()
+				<< "\n";
+			std::cout << m_boardFields[2].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[4].GetMarkedBy()
+				<< "=="
+				<< m_boardFields[6].GetMarkedBy()
+				<< "\n";
+			std::cout << name2 << " won !!!";
 			return true;
 		}
 	}
 
 	return false;
+}
+
+bool GameBoard::IsDraw () {
+	for (int i = 0; i < 9; i++)
+		if (m_boardFields[i].GetMarkedBy() == None)
+			return false;
+	return true;
 }

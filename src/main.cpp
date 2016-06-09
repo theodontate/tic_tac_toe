@@ -22,31 +22,54 @@
 
 int main (int argc, char** argv) {
 	GameBoard board;
-	GameBoard::DisplayGameBoard();
-	Player player1("player1");
-	Player player2("player2");
+	std::string player1name, player2name;
+	std::cout << "Enter the name of Player1 : ";
+	std::cin >> player1name;
+	std::cout << "\nEnter the name of Player2 : ";
+	std::cin >> player2name;
+	Player player1(player1name,Player1);
+	Player player2(player2name,Player2);
 	bool gameplay = true;
+	bool isdraw = false;
 
 	int tmp = 1;
 	int position = 0;
+	//std::cout << "\033[2J\033[1;1H";
+	GameBoard::DisplayGameBoard();
 	while (gameplay) {
 		if (tmp % 2 == 0) {
-			std::cout << "Player1 please enter your move : ";
+			std::cout << "\n" << player1name << " please enter your move : ";
 			std::cin >> position;
-			board.Update(position, player1.GetName());
+			if(!board.Update(position, player1.GetType()))
+				continue;
+			//std::cout << "\033[2J\033[1;1H";
 			board.DisplayGameBoard();
-			if (board.GameOver())
+			if (board.GameOver(player1name, player2name))
 				break;
+			if (board.IsDraw()) {
+				isdraw = true;
+				break;
+			}
+			tmp++;
 		}
 		else {
-			std::cout << "Player2 please enter your move : ";
+			std::cout << "\n" << player2name << " please enter your move : ";
 			std::cin >> position;
-			board.Update(position, player2.GetName());
+			board.Update(position, player2.GetType());
+			//std::cout << "\033[2J\033[1;1H";
 			board.DisplayGameBoard();
-			if (board.GameOver())
+			if (board.GameOver(player1name, player2name))
 				break;
+			if (board.IsDraw()) {
+				isdraw = true;
+				break;
+			}
+			tmp++;
 		}
 
+	}
+	if (isdraw) {
+		std::cout << "Game is a draw.\n";
 	}
 
 	return 0;

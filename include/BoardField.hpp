@@ -19,6 +19,8 @@
 #ifndef id17592935011891
 #define id17592935011891
 
+#include <iostream>
+
 enum mark {None, Player1, Player2};
 
 class BoardField {
@@ -28,6 +30,7 @@ class BoardField {
 	int GetPosition ( );
 	void SetMarkedBy ( mark m );
 	mark GetMarkedBy ( );
+	friend std::ostream& operator<< (std::ostream& os, const BoardField& a);
 
 	private:
 		int m_position;
