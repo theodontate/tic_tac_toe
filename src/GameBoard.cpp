@@ -57,11 +57,103 @@ void printRow (BoardField* p) {
 	return;
 }
 
-void GameBoard::update (int position, const std::string& playerName) {
+void GameBoard::Update (int position, const std::string& playerName) {
 	if (playerName == "player1") {
-		m_boardFields[position].SetMarkedBy(mark::Player1);
+		m_boardFields[position].SetMarkedBy(::Player1);
 	} else {
-		m_boardFields[position].SetMarkedBy(mark::Player2);
+		m_boardFields[position].SetMarkedBy(::Player2);
 	}
 
+}
+
+bool GameBoard::GameOver () {
+	if (m_boardFields[0].GetMarkedBy() == m_boardFields[1].GetMarkedBy()
+		== m_boardFields[2].GetMarkedBy() != None) {
+		if (m_boardFields[1].GetMarkedBy() == Player1) {
+			std::cout << "Player1 won !!!";
+			return true;
+		} else if (m_boardFields[1].GetMarkedBy() == Player2){
+			std::cout << "Player2 won !!!";
+			return true;
+		}
+	}
+
+	else if (m_boardFields[0].GetMarkedBy() == m_boardFields[3].GetMarkedBy()
+		== m_boardFields[6].GetMarkedBy() != None) {
+		if (m_boardFields[0].GetMarkedBy() == Player1) {
+			std::cout << "Player1 won !!!";
+			return true;
+		} else if (m_boardFields[0].GetMarkedBy() == Player2){
+			std::cout << "Player2 won !!!";
+			return true;
+		}
+	}
+
+	else if (m_boardFields[0].GetMarkedBy() == m_boardFields[4].GetMarkedBy()
+		== m_boardFields[8].GetMarkedBy() != None) {
+		if (m_boardFields[0].GetMarkedBy() == Player1) {
+			std::cout << "Player1 won !!!";
+			return true;
+		} else if (m_boardFields[0].GetMarkedBy() == Player2){
+			std::cout << "Player2 won !!!";
+			return true;
+		}
+	}
+
+	else if (m_boardFields[6].GetMarkedBy() == m_boardFields[7].GetMarkedBy()
+		== m_boardFields[8].GetMarkedBy() != None) {
+		if (m_boardFields[7].GetMarkedBy() == Player1) {
+			std::cout << "Player1 won !!!";
+			return true;
+		} else if (m_boardFields[7].GetMarkedBy() == Player2){
+			std::cout << "Player2 won !!!";
+			return true;
+		}
+	}
+
+	else if (m_boardFields[3].GetMarkedBy() == m_boardFields[4].GetMarkedBy()
+		== m_boardFields[5].GetMarkedBy() != None) {
+		if (m_boardFields[4].GetMarkedBy() == Player1) {
+			std::cout << "Player1 won !!!";
+			return true;
+		} else if (m_boardFields[4].GetMarkedBy() == Player2){
+			std::cout << "Player2 won !!!";
+			return true;
+		}
+	}
+
+	else if (m_boardFields[1].GetMarkedBy() == m_boardFields[4].GetMarkedBy()
+		== m_boardFields[7].GetMarkedBy() != None) {
+		if (m_boardFields[4].GetMarkedBy() == Player1) {
+			std::cout << "Player1 won !!!";
+			return true;
+		} else if (m_boardFields[4].GetMarkedBy() == Player2){
+			std::cout << "Player2 won !!!";
+			return true;
+		}
+	}
+
+	else if (m_boardFields[2].GetMarkedBy() == m_boardFields[5].GetMarkedBy()
+		== m_boardFields[8].GetMarkedBy() != None) {
+		if (m_boardFields[5].GetMarkedBy() == Player1) {
+			std::cout << "Player1 won !!!";
+			return true;
+		} else if (m_boardFields[5].GetMarkedBy() == Player2){
+			std::cout << "Player2 won !!!";
+			return true;
+		}
+	}
+
+	else if (m_boardFields[2].GetMarkedBy() == m_boardFields[4].GetMarkedBy()
+		== m_boardFields[6].GetMarkedBy() != None) {
+		if (m_boardFields[4].GetMarkedBy() == Player1) {
+			std::cout << "Player1 won !!!";
+			return true;
+		} else if (m_boardFields[5].GetMarkedBy() == Player2){
+			std::cout << "Player2 won !!!";
+			return true;
+		}
+	}
+
+	return false;
 }

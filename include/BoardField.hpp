@@ -27,6 +27,7 @@ class BoardField {
 	void Display ( );
 	int GetPosition ( );
 	void SetMarkedBy ( mark m );
+	mark GetMarkedBy ( );
 
 	private:
 		int m_position;

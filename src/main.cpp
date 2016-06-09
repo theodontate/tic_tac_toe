@@ -33,14 +33,18 @@ int main (int argc, char** argv) {
 		if (tmp % 2 == 0) {
 			std::cout << "Player1 please enter your move : ";
 			std::cin >> position;
-			board.update(position, player1.GetName());
+			board.Update(position, player1.GetName());
 			board.DisplayGameBoard();
+			if (board.GameOver())
+				break;
 		}
 		else {
 			std::cout << "Player2 please enter your move : ";
 			std::cin >> position;
-			board.update(position, player2.GetName());
+			board.Update(position, player2.GetName());
 			board.DisplayGameBoard();
+			if (board.GameOver())
+				break;
 		}
 
 	}

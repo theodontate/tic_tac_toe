@@ -26,8 +26,9 @@ class GameBoard {
 	public:
 		GameBoard ( );
 		static void DisplayGameBoard ( );
-		static void update ( int position,
+		static void Update ( int position,
 				     const std::string& playerName );
+		static bool GameOver ( );
 
 	private:
 		static BoardField m_boardFields[9];

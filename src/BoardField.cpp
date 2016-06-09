@@ -37,7 +37,10 @@ int BoardField::GetPosition () {
 	return m_position;
 }
 
-void BoardField::SetMarkedBy(mark m) {
+void BoardField::SetMarkedBy (mark m) {
 	m_markedBy = m;
 }
 
+mark BoardField::GetMarkedBy () {
+	return m_markedBy;
+}
